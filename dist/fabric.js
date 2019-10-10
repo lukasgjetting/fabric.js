@@ -16407,7 +16407,7 @@ fabric.util.object.extend(fabric.Object.prototype, /** @lends fabric.Object.prot
       this._setLineDash(ctx, styleOverride.cornerDashArray || this.cornerDashArray, null);
 
       // top-left
-      this._drawDeleteControl('tl', ctx, icon,
+      this._drawDeleteControl('tl', ctx,
         left,
         top);
 
@@ -16488,7 +16488,7 @@ fabric.util.object.extend(fabric.Object.prototype, /** @lends fabric.Object.prot
       }
     },
 
-    _drawDeleteControl: function(control, ctx, left, top, icon) {
+    _drawDeleteControl: function(control, ctx, left, top) {
       if (!this.isControlVisible(control)) {
         return;
       }

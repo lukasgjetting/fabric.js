@@ -251,7 +251,7 @@
       this._setLineDash(ctx, styleOverride.cornerDashArray || this.cornerDashArray, null);
 
       // top-left
-      this._drawDeleteControl('tl', ctx, icon,
+      this._drawDeleteControl('tl', ctx,
         left,
         top);
 
@@ -332,7 +332,7 @@
       }
     },
 
-    _drawDeleteControl: function(control, ctx, left, top, icon) {
+    _drawDeleteControl: function(control, ctx, left, top) {
       if (!this.isControlVisible(control)) {
         return;
       }
