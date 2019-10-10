@@ -27,7 +27,7 @@
      */
     cursorMap: [
       'n-resize',
-      'ne-resize',
+      'pointer',
       'e-resize',
       'se-resize',
       's-resize',

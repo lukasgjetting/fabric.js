@@ -251,12 +251,12 @@
       this._setLineDash(ctx, styleOverride.cornerDashArray || this.cornerDashArray, null);
 
       // top-left
-      this._drawDeleteControl('tl', ctx,
+      this._drawControl('tl', ctx, methodName,
         left,
-        top);
+        top, styleOverride);
 
       // top-right
-      if(this.canvas.deleteIcon) {
+      if (this.canvas.deleteIcon) {
         this._drawDeleteControl('tr', ctx,
           left + width,
           top);

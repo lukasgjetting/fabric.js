@@ -11081,7 +11081,7 @@ fabric.PatternBrush = fabric.util.createClass(fabric.PencilBrush, /** @lends fab
      */
     cursorMap: [
       'n-resize',
-      'ne-resize',
+      'pointer',
       'e-resize',
       'se-resize',
       's-resize',
@@ -16414,12 +16414,12 @@ fabric.util.object.extend(fabric.Object.prototype, /** @lends fabric.Object.prot
       this._setLineDash(ctx, styleOverride.cornerDashArray || this.cornerDashArray, null);
 
       // top-left
-      this._drawDeleteControl('tl', ctx,
+      this._drawControl('tl', ctx, methodName,
         left,
-        top);
+        top, styleOverride);
 
       // top-right
-      if(this.canvas.deleteIcon) {
+      if (this.canvas.deleteIcon) {
         this._drawDeleteControl('tr', ctx,
           left + width,
           top);
