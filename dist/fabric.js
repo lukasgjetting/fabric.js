@@ -1310,7 +1310,7 @@ fabric.CommonMethods = {
      * @memberOf fabric.util
      * @param  {Object} options
      * @param  {Number} [options.angle] angle in degrees
-     * @return {Array[Number]} transform matrix
+     * @return {Number[]} transform matrix
      */
     calcRotateMatrix: function(options) {
       if (!options.angle) {
@@ -1337,7 +1337,7 @@ fabric.CommonMethods = {
      * @param  {Boolean} [options.flipY]
      * @param  {Number} [options.skewX]
      * @param  {Number} [options.skewX]
-     * @return {Array[Number]} transform matrix
+     * @return {Number[]} transform matrix
      */
     calcDimensionsMatrix: function(options) {
       var scaleX = typeof options.scaleX === 'undefined' ? 1 : options.scaleX,
@@ -1382,7 +1382,7 @@ fabric.CommonMethods = {
      * @param  {Number} [options.skewX]
      * @param  {Number} [options.translateX]
      * @param  {Number} [options.translateY]
-     * @return {Array[Number]} transform matrix
+     * @return {Number[]} transform matrix
      */
     composeMatrix: function(options) {
       var matrix = [1, 0, 0, 1, options.translateX || 0, options.translateY || 0],
@@ -1405,7 +1405,7 @@ fabric.CommonMethods = {
      * @param  {Number} scaleX
      * @param  {Number} scaleY
      * @param  {Number} skewX
-     * @return {Array[Number]} transform matrix
+     * @return {Number[]} transform matrix
      */
     customTransformMatrix: function(scaleX, scaleY, skewX) {
       return fabric.util.composeMatrix({ scaleX: scaleX, scaleY: scaleY, skewX: skewX });
@@ -5788,7 +5788,7 @@ fabric.ElementsParser = function(elements, callback, options, reviver, parsingOp
      * Imported from svg gradients, is not applied with the current transform in the center.
      * Before this transform is applied, the origin point is at the top left corner of the object
      * plus the addition of offsetY and offsetX.
-     * @type Array[Number]
+     * @type Number[]
      * @default null
      */
     gradientTransform: null,
@@ -5798,14 +5798,15 @@ fabric.ElementsParser = function(elements, callback, options, reviver, parsingOp
      * If `pixels`, the number of coords are in the same unit of width / height.
      * If set as `percentage` the coords are still a number, but 1 means 100% of width
      * for the X and 100% of the height for the y. It can be bigger than 1 and negative.
-     * @type String pixels || percentage
+     * allowed values pixels or percentage.
+     * @type String
      * @default 'pixels'
      */
     gradientUnits: 'pixels',
 
     /**
-     * Gradient type
-     * @type String linear || radial
+     * Gradient type linear or radial
+     * @type String
      * @default 'pixels'
      */
     type: 'linear',
@@ -5817,7 +5818,7 @@ fabric.ElementsParser = function(elements, callback, options, reviver, parsingOp
      * @param {Object} [options.gradientUnits] gradient units
      * @param {Object} [options.offsetX] SVG import compatibility
      * @param {Object} [options.offsetY] SVG import compatibility
-     * @param {Array[Object]} options.colorStops contains the colorstops.
+     * @param {Object[]} options.colorStops contains the colorstops.
      * @param {Object} options.coords contains the coords of the gradient
      * @param {Number} [options.coords.x1] X coordiante of the first point for linear or of the focal point for radial
      * @param {Number} [options.coords.y1] Y coordiante of the first point for linear or of the focal point for radial
@@ -14561,6 +14562,7 @@ fabric.util.object.extend(fabric.StaticCanvas.prototype, /** @lends fabric.Stati
      * @param {Function} [callback] Callback to invoke when image set as a pattern
      * @return {fabric.Object} thisArg
      * @chainable
+     * @deprecated since 3.5.0
      * @see {@link http://jsfiddle.net/fabricjs/QT3pa/|jsFiddle demo}
      * @example <caption>Set pattern</caption>
      * object.setPatternFill({
@@ -14581,6 +14583,7 @@ fabric.util.object.extend(fabric.StaticCanvas.prototype, /** @lends fabric.Stati
      * @param {Number} [options.offsetY=0] Shadow vertical offset
      * @return {fabric.Object} thisArg
      * @chainable
+     * @deprecated since 3.5.0
      * @see {@link http://jsfiddle.net/fabricjs/7gvJG/|jsFiddle demo}
      * @example <caption>Set shadow with string notation</caption>
      * object.setShadow('2px 2px 10px rgba(0,0,0,0.2)');
@@ -14602,6 +14605,7 @@ fabric.util.object.extend(fabric.StaticCanvas.prototype, /** @lends fabric.Stati
      * Sets "color" of an instance (alias of `set('fill', &hellip;)`)
      * @param {String} color Color value
      * @return {fabric.Object} thisArg
+     * @deprecated since 3.5.0
      * @chainable
      */
     setColor: function(color) {
@@ -16403,9 +16407,9 @@ fabric.util.object.extend(fabric.Object.prototype, /** @lends fabric.Object.prot
       this._setLineDash(ctx, styleOverride.cornerDashArray || this.cornerDashArray, null);
 
       // top-left
-      this._drawControl('tl', ctx, methodName,
+      this._drawDeleteControl('tl', ctx, icon,
         left,
-        top, styleOverride);
+        top);
 
       // top-right
       this._drawControl('tr', ctx, methodName,
@@ -16482,6 +16486,16 @@ fabric.util.object.extend(fabric.Object.prototype, /** @lends fabric.Object.prot
             ctx.strokeRect(left, top, size, size);
           }
       }
+    },
+
+    _drawDeleteControl: function(control, ctx, left, top, icon) {
+      if (!this.isControlVisible(control)) {
+        return;
+      }
+
+      var path = new Path2D('M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v10zM18 4h-2.5l-.71-.71c-.18-.18-.44-.29-.7-.29H9.91c-.26 0-.52.11-.7.29L8.5 4H6c-.55 0-1 .45-1 1s.45 1 1 1h12c.55 0 1-.45 1-1s-.45-1-1-1z');
+
+      ctx.stroke(path, left, top, this.cornerSize, this.cornerSize);
     },
 
     /**
@@ -20385,7 +20399,8 @@ fabric.util.object.extend(fabric.Object.prototype, /** @lends fabric.Object.prot
     },
 
     /**
-     * @private, needed to check if image needs resize
+     * needed to check if image needs resize
+     * @private
      */
     _needsResize: function() {
       var scale = this.getTotalObjectScaling();
