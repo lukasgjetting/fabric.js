@@ -666,6 +666,8 @@
         case 'mt':
         case 'mb':
           return e[this.altActionKey] ? 'skewX' : 'scaleY';
+        case 'tr':
+          return 'delete';
         default:
           return 'scale';
       }
@@ -685,6 +687,11 @@
           corner = target._findTargetCorner(this.getPointer(e, true)),
           action = this._getActionFromCorner(alreadySelected, corner, e, target),
           origin = this._getOriginFromCorner(target, corner);
+
+      if(action === 'delete') {
+        this.deleteHandler();
+        return;
+      }
 
       this._currentTransform = {
         target: target,
