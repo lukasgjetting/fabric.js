@@ -343,7 +343,7 @@
         return;
       }
 
-      ctx.drawImage(this.canvas.deleteIcon, left, top);
+      ctx.drawImage(this.canvas.deleteIcon, left, top - 10);
     },
 
 

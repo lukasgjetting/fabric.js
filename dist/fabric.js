@@ -16506,7 +16506,7 @@ fabric.util.object.extend(fabric.Object.prototype, /** @lends fabric.Object.prot
         return;
       }
 
-      ctx.drawImage(this.canvas.deleteIcon, left, top);
+      ctx.drawImage(this.canvas.deleteIcon, left, top - 10);
     },
 
 
