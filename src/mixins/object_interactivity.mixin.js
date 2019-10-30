@@ -86,21 +86,28 @@
       for (var point in coords) {
         x = coords[point].x;
         y = coords[point].y;
+
+        var offset = 0;
+
+        if (this.canvas && this.canvas.deleteIcon && point === 'tr') {
+          offset = 10;
+        }
+
         coords[point].corner = {
           tl: {
             x: x - sinHalfOffset,
-            y: y - cosHalfOffset
+            y: y - cosHalfOffset - offset
           },
           tr: {
-            x: x + cosHalfOffset,
-            y: y - sinHalfOffset
+            x: x + cosHalfOffset + offset,
+            y: y - sinHalfOffset - offset
           },
           bl: {
             x: x - cosHalfOffset,
             y: y + sinHalfOffset
           },
           br: {
-            x: x + sinHalfOffset,
+            x: x + sinHalfOffset + offset,
             y: y + cosHalfOffset
           }
         };
